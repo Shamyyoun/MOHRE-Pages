@@ -54,11 +54,8 @@
 				return;
 			}
 			
-			// Prepare constants
-			const timeout = 1500;
-			const appUrl = "mohre://" + path;
-
 			// Launch task to redirect to the store after some timeout as a fallback
+			const timeout = 1500;
 			const now = Date.now();
 			setTimeout(function () {
 				if (Date.now() - now < timeout + 300) {
@@ -67,7 +64,7 @@
 			}, timeout);
 
 			// Attempt to open the app
-			window.location = appUrl;
+			window.location = getDeeplinkUrl(path);
 		}
 
 		window.onload = function () {
