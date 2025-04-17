@@ -27,11 +27,19 @@
 			return "unknown";
 		}
 
-		function getStoreUrl() {
+		function getFallbackUrl() {
 			if (getMobileOperatingSystem() == "Android") {
 				return "https://play.google.com/store/apps/details?id=ae.gov.mol";
 			} else {
 				return "https://apps.apple.com/ae/app/mohre-uae/id807379317";
+			}
+		}
+
+		function getDeeplinkUrl(path) {
+			if (getMobileOperatingSystem() == "Android") {
+				return "https://mohre.gov.ae/" + path;
+			} else {
+				return "https://mohreiosapp.page.link/" + path;
 			}
 		}
 
