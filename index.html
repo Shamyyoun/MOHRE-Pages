@@ -27,27 +27,43 @@
 			return "unknown";
 		}
 
-		function navigateToDynamicLink() {
-			const os = getMobileOperatingSystem();
-
-			// Get path
-			const urlSearchParams = new URLSearchParams(window.location.search);
-			const path = Object.fromEntries(urlSearchParams.entries())["p"];
-
-			if (!path) {
-				window.location.href = "https://www.mohre.gov.ae/ar/projects/smart-app.aspx";
-				return;
-			}
-
-			if (os == "Android") {
-				window.location.href = "https://mohre.page.link/" + path;
+		function getStoreUrl() {
+			if (getMobileOperatingSystem() == "Android") {
+				return "https://play.google.com/store/apps/details?id=ae.gov.mol";
 			} else {
-				window.location.href = "https://mohreiosapp.page.link/" + path;
+				return "https://apps.apple.com/ae/app/mohre-uae/id807379317";
 			}
 		}
 
+		function navigateToDeepLink() {
+			// Get path info
+			const urlSearchParams = new URLSearchParams(window.location.search);
+			const path = Object.fromEntries(urlSearchParams.entries())["p"];
+
+			// Validate path
+			if (!path) {
+				window.location.href = "https://www.mohre.gov.ae";
+				return;
+			}
+			
+			// Prepare constants
+			const timeout = 1500;
+			const appUrl = "mohre://" + path;
+
+			// Launch task to redirect to the store after some timeout as a fallback
+			const now = Date.now();
+			setTimeout(function () {
+				if (Date.now() - now < timeout + 300) {
+					window.location = getStoreUrl();
+				}
+			}, timeout);
+
+			// Attempt to open the app
+			window.location = appUrl;
+		}
+
 		window.onload = function () {
-			navigateToDynamicLink();
+			navigateToDeepLink();
 		}
 
 	</script>
