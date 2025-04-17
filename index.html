@@ -59,7 +59,7 @@
 			const now = Date.now();
 			setTimeout(function () {
 				if (Date.now() - now < timeout + 300) {
-					window.location = getStoreUrl();
+					window.location = getFallbackUrl();
 				}
 			}, timeout);
 
