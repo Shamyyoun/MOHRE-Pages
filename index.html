@@ -1,0 +1,74 @@
+HTTP/1.1 200 OK
+Cache-Control: max-age=172800
+Content-Type: text/html
+Last-Modified: Tue, 30 Nov 2021 10:50:18 GMT
+Accept-Ranges: bytes
+ETag: "f3a05510d8e5d71:0"
+Server: Microsoft-IIS/8.5
+NODE: 07
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: deny
+Access-Control-Allow-Headers: Content-Type, X-Requested-With
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, HEAD
+X-UA-Compatible: IE=EmulateIE8
+Date: Thu, 17 Apr 2025 05:53:56 GMT
+Content-Length: 1379
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>MOHRE App</title>
+
+	<script type="text/javascript">
+		function getMobileOperatingSystem() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			// Windows Phone must come first because its UA also contains "Android"
+			if (/windows phone/i.test(userAgent)) {
+				return "Windows Phone";
+			}
+
+			if (/android/i.test(userAgent)) {
+				return "Android";
+			}
+
+			// iOS detection from: http://stackoverflow.com/a/9039885/177710
+			if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+				return "iOS";
+			}
+
+			return "unknown";
+		}
+
+		function navigateToDynamicLink() {
+			const os = getMobileOperatingSystem();
+
+			// Get path
+			const urlSearchParams = new URLSearchParams(window.location.search);
+			const path = Object.fromEntries(urlSearchParams.entries())["p"];
+
+			if (!path) {
+				window.location.href = "https://www.mohre.gov.ae/ar/projects/smart-app.aspx";
+				return;
+			}
+
+			if (os == "Android") {
+				window.location.href = "https://mohre.page.link/" + path;
+			} else {
+				window.location.href = "https://mohreiosapp.page.link/" + path;
+			}
+		}
+
+		window.onload = function () {
+			navigateToDynamicLink();
+		}
+
+	</script>
+</head>
+
+</html>
