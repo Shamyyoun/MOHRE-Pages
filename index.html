@@ -35,14 +35,6 @@
 			}
 		}
 
-		function getDeeplinkUrl(path) {
-			if (getMobileOperatingSystem() == "Android") {
-				return "https://mohre.gov.ae/" + path;
-			} else {
-				return "mohre://" + path;
-			}
-		}
-
 		function navigateToDeepLink() {
 			// Get path info
 			const urlSearchParams = new URLSearchParams(window.location.search);
@@ -64,7 +56,7 @@
 			}, timeout);
 
 			// Attempt to open the app
-			window.location = getDeeplinkUrl(path);
+			window.location = "mohre://" + path;
 		}
 
 		window.onload = function () {
